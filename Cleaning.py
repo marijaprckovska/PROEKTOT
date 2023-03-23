@@ -1,7 +1,6 @@
 import requests
 import re
-from cleanco import cleanco
-
+import cleanco
 
 GET_URL = "http://localhost:5000/companies"
 POST_URL = "http://localhost:5000/companies"
@@ -13,17 +12,11 @@ cleanedCompanies = {}
 for company in companies:
 
     name = re.sub(r',.*', '', company["name"])
-
     name = re.sub(r'\(.*\)', '', name)
-
     name = re.sub(r'\"', '', name)
-
     name = re.sub(r'\s-\s', ' ', name)
-
-    name = cleanco(name).clean_name()
-
+    name = cleanco.basename(name)
     name = name.title()
-
     name = re.sub(r'\b([A-Z]+)\b', lambda match: match.group(1).upper(), name)
 
     cleanedCompanies = {
